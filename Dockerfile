@@ -8,7 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["Vehicle.Web/Vehicle.Web.csproj", "Vehicle.Web/"]
-RUN dotnet restore "Vehicle.WebVehicle.Web/Vehicle.Web.csproj"
+RUN dotnet restore "Vehicle.Web/Vehicle.Web.csproj"
 COPY . .
 WORKDIR "/src/Vehicle.Web"
 RUN dotnet build "Vehicle.Web.csproj" -c Release -o /app/build
