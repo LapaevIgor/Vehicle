@@ -1,0 +1,45 @@
+version: '3.7'
+
+volumes:
+  database_data:
+    driver: local
+  database_log:
+    driver: local
+  database_secrets:
+    driver: local
+
+services:
+  vehicle_db:
+    image: mcr.microsoft.com/mssql/server
+    container_name: vehicle_db
+    user: root
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=y
+      - MSSQL_SA_PASSWORD=Test12345!
+    volumes:
+      - database_data:/var/opt/mssql/data
+      - database_log:/var/opt/mssql/log
+      - database_secrets:/var/opt/mssql/secrets
+    ports:
+      - 1433:1433
+
+  vehicle_backend:
+    image: vehicle/backend
+    container_name: vehicle_backend
+    depends_on:
+      - vehicle_db
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=docker
+    ports:
+      - 4201:80
+
+  vehicle_frontend:
+    image: vehicle/frontend
+    container_name: vehicle_frontend
+    depends_on:
+      - vehicle_backend
+    restart: unless-stopped
+    ports:
+      - 4200:80
