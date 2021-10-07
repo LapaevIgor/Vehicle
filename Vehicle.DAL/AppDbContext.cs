@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Vehicle.DAL.Models;
+using Vehicle.DAL.Entities;
 
 namespace Vehicle.DAL
 {
