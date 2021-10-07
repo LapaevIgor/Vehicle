@@ -35,6 +35,15 @@ services:
     ports:
       - 4201:80
 
+  vehicle_notifications_sevice:
+    image: vehicle/notifications_sevice
+    container_name: notifications_sevice
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=docker
+    ports:
+      - 4202:80
+
   vehicle_frontend:
     image: vehicle/frontend
     container_name: vehicle_frontend
