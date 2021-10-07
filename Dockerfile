@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["WebRtcDemoBackend/WebRtcDemoBackend.csproj", "WebRtcDemoBackend/"]
-RUN dotnet restore "WebRtcDemoBackend/WebRtcDemoBackend.csproj"
+COPY ["Vehicle.Web/Vehicle.Web.csproj", "Vehicle.Web/"]
+RUN dotnet restore "Vehicle.WebVehicle.Web/Vehicle.Web.csproj"
 COPY . .
-WORKDIR "/src/WebRtcDemoBackend"
-RUN dotnet build "WebRtcDemoBackend.csproj" -c Release -o /app/build
+WORKDIR "/src/Vehicle.Web"
+RUN dotnet build "Vehicle.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "WebRtcDemoBackend.csproj" -c Release -o /app/publish
+RUN dotnet publish "Vehicle.Web.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "WebRtcDemoBackend.dll"]
+ENTRYPOINT ["dotnet", "Vehicle.Web.dll"]

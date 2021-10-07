@@ -4,7 +4,7 @@ docker image rm vehicle/backend
 
 git pull
 
-cd FrontendClientApp
+cd Vehicle.Frontend
 docker build -t vehicle/frontend .
 cd ..
 
