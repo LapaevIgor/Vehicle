@@ -24,6 +24,38 @@ services:
     ports:
       - 1433:1433
 
+  vehicle_rabbit_mq:
+    image: rabbitmq:3-management
+    container_name: vehicle_rabbit_mq
+    restart: unless-stopped
+    ports:
+      - 5672:5672
+      - 5673:5673
+      - 15672:15672
+
+  vehicle_mail_hog:
+    image: mailhog/mailhog
+    container_name: vehicle_mail_hog
+    restart: unless-stopped
+    ports:
+      - 8025:8025
+      - 1025:1025
+
+  vehicle_minio:
+    image: minio/minio
+    container_name: vehicle_minio
+    command: server /data --console-address ":9001"
+    expose:
+      - "9000"
+      - "9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: Test12345!
+    restart: unless-stopped
+    ports:
+      - 9000:9000
+      - 9001:9001
+
   vehicle_backend:
     image: vehicle/backend
     container_name: vehicle_backend
@@ -34,15 +66,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=docker
     ports:
       - 4201:80
-
-  vehicle_notifications_sevice:
-    image: vehicle/notifications_sevice
-    container_name: notifications_sevice
-    restart: unless-stopped
-    environment:
-      - ASPNETCORE_ENVIRONMENT=docker
-    ports:
-      - 4202:80
 
   vehicle_frontend:
     image: vehicle/frontend
