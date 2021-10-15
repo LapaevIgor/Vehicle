@@ -4,4 +4,15 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vehicle.Constants\Vehicle.Constants.csproj" />
+    <ProjectReference Include="..\Vehicle.DAL.Entities\Vehicle.DAL.Entities.csproj" />
+    <ProjectReference Include="..\Vehicle.DAL\Vehicle.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

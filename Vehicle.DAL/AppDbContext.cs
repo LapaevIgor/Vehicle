@@ -11,11 +11,14 @@ namespace Vehicle.DAL
             Database.Migrate();
         }
 
-        DbSet<User> Users { get;set; }
+        DbSet<UserDb> Users { get;set; }
+        DbSet<UserPhoneNumberDb> UserPhoneNumbers { get;set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>();
+            modelBuilder.Entity<UserDb>();
+            modelBuilder.Entity<UserPhoneNumberDb>()
+                .HasOne(u => u.User);
         }
     }
 }

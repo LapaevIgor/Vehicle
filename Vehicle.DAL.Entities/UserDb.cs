@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Vehicle.Constants.Enums;
 
 namespace Vehicle.DAL.Entities
 {
-    public class User
+    public class UserDb
     {
         public int Id { get; set; }
 
@@ -14,6 +15,8 @@ namespace Vehicle.DAL.Entities
         public string LastName { get; set; }
 
         public string Email { get; set; }
+
+        public virtual ICollection<UserPhoneNumberDb> UserPhoneNumbers { get; set; }
 
         public SexEnum Sex { get; set; }
 
