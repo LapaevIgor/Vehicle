@@ -8,7 +8,10 @@ namespace Vehicle.Web.MappingProfiles
     {
         public ModelToDomainProfile()
         {
-            CreateMap<UserModel, User>();
+            CreateMap<UserModel, User>()
+                .ForMember(d => d.UserPhoneNumbers, o => o.MapFrom(s => s.PhoneNumbers));
+
+            CreateMap<UserPhoneNumberModel, UserPhoneNumber>();
         }
     }
 }

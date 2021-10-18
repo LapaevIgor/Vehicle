@@ -8,7 +8,10 @@ namespace Vehicle.BLL.MappingProfiles
     {
         public DataToDomainProfile()
         {
-            CreateMap<UserDb, User>();
+            CreateMap<UserDb, User>()
+                .ForMember(d => d.UserPhoneNumbers, o => o.MapFrom(s => s.UserPhoneNumbers));
+
+            CreateMap<UserPhoneNumberDb, UserPhoneNumber>();
         }
     }
 }
