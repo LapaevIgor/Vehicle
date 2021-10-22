@@ -37,6 +37,7 @@ namespace Vehicle.Web
 
             services.AddSwaggerGen(c =>
             {
+                c.EnableAnnotations();
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Vehicle", Version = "v1" });
             });
         }

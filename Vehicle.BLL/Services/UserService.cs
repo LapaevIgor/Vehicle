@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Vehicle.BLL.Exceptions;
 using Vehicle.BLL.Models;
 using Vehicle.BLL.Services.Interfaces;
 using Vehicle.DAL.Entities;
@@ -26,7 +26,7 @@ namespace Vehicle.BLL.Services
             
             if(existingUser is not null)
             {
-                throw new Exception(); //TODO Exception that such user already exists
+                throw new UserException("User already exists");
             }
 
             var userDb = _mapper.Map<UserDb>(user);
@@ -46,10 +46,10 @@ namespace Vehicle.BLL.Services
 
             if (existingUser is null)
             {
-                throw new Exception(); //TODO Exception that such user not exists
+                throw new UserException("User not found");
             }
 
-            _uow.UserRepository.Create(existingUser);
+            _uow.UserRepository.DeleteById(id);
         }
 
         public IEnumerable<User> GetAll()
@@ -66,15 +66,13 @@ namespace Vehicle.BLL.Services
 
         public User Update(User user)
         {
-            var existingUser = _uow.UserRepository.GetById(user.Id);
-
-            if (existingUser is null)
+            // Check for duplicate phone numbers
+            if (user.UserPhoneNumbers != null && user.UserPhoneNumbers.Any(n => user.UserPhoneNumbers.Count(p => p.CheckPhoneNumberForDuplicate(n)) > 1))
             {
-                throw new Exception(); //TODO Exception that such user not exists
+                throw new UserException("Duplicate phone numbers");
             }
 
-            var userDb = _mapper.Map<UserDb>(user);
-            var result = _uow.UserRepository.Update(userDb);
+            var result = _uow.UserRepository.Update(_mapper.Map<UserDb>(user));
             return _mapper.Map<User>(result);
         }
     }

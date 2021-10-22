@@ -11,8 +11,8 @@ namespace Vehicle.DAL
             Database.Migrate();
         }
 
-        DbSet<UserDb> Users { get;set; }
-        DbSet<UserPhoneNumberDb> UserPhoneNumbers { get;set; }
+        public DbSet<UserDb> Users { get;set; }
+        public DbSet<UserPhoneNumberDb> UserPhoneNumbers { get;set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

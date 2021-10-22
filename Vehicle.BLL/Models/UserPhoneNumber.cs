@@ -9,5 +9,10 @@
         public string PhoneNumber { get; set; }
 
         public virtual User User { get; set; }
+
+        public bool CheckPhoneNumberForDuplicate(UserPhoneNumber number)
+        {
+            return number == null ? false : PhoneNumber == number.PhoneNumber;
+        }
     }
 }
