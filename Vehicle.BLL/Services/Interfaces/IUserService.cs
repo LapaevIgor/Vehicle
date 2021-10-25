@@ -1,20 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Vehicle.BLL.Models;
 
 namespace Vehicle.BLL.Services.Interfaces
 {
     public interface IUserService
     {
-        IEnumerable<User> GetAll();
+        Task<IEnumerable<User>> GetAllAsync();
 
-        User GetById(int id);
+        Task<User> GetByIdAsync(int id);
 
-        User Add(User user);
+        Task<User> AddAsync(User user);
 
-        User Update(User user);
+        Task<User> UpdateAsync(User user);
 
-        void DeleteById(int id);
+        Task DeleteByIdAsync(int id);
 
-        void Delete(User user);
+        Task DeleteAsync(User user);
     }
 }

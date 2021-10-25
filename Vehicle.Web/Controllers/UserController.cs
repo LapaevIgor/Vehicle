@@ -4,6 +4,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using Vehicle.BLL.Models;
 using Vehicle.BLL.Services.Interfaces;
 using Vehicle.ViewModels.Users;
@@ -29,9 +30,9 @@ namespace Vehicle.Web.Controllers
         [SwaggerResponse((int)HttpStatusCode.NotFound, "Search users doesn't exist")]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Something wrong")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
-            var result = _userService.GetAll();
+            var result = await _userService.GetAllAsync();
             var users = _mapper.Map<IEnumerable<UserModel>>(result);
             return users == null ? NotFound() : Ok(users);
         }
@@ -42,9 +43,9 @@ namespace Vehicle.Web.Controllers
         [SwaggerResponse((int)HttpStatusCode.NotFound, "Search user doesn't exist")]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Something wrong")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var result = _userService.GetById(id);
+            var result = await _userService.GetByIdAsync(id);
             var users = _mapper.Map<UserModel>(result);
             return users == null ? NotFound() : Ok(users);
         }
@@ -59,13 +60,13 @@ namespace Vehicle.Web.Controllers
         [SwaggerResponse((int)HttpStatusCode.OK, "User profile added", typeof(UserModel))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Something wrong")]
-        public IActionResult Add(UserModel userModel)
+        public async Task<IActionResult> AddAsync(UserModel userModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var user =_userService.Add(_mapper.Map<User>(userModel));
+                    var user = await _userService.AddAsync(_mapper.Map<User>(userModel));
                     var result = _mapper.Map<UserModel>(user);
                     return Ok(result);
                 }
@@ -83,7 +84,7 @@ namespace Vehicle.Web.Controllers
         [SwaggerResponse((int)HttpStatusCode.OK, "Profile updated", typeof(UserModel))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Ivalid paramater format")]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Something wrong")]
-        public IActionResult Update(int id, UserModel userModel)
+        public async Task<IActionResult> UpdateAsync(int id, UserModel userModel)
         {
             if (userModel is not null && ModelState.IsValid)
             {
@@ -91,7 +92,7 @@ namespace Vehicle.Web.Controllers
                 {
                     var user = _mapper.Map<User>(userModel);
                     user.Id = id;
-                    var result = _userService.Update(user);
+                    var result = await _userService.UpdateAsync(user);
                     return Ok(_mapper.Map<UserModel>(result));
                 }
                 catch(Exception ex)
@@ -108,9 +109,9 @@ namespace Vehicle.Web.Controllers
         [SwaggerResponse((int)HttpStatusCode.OK, "User deleted", typeof(UserModel))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Something wrong")]
-        public void DeleteById(int id)
+        public async Task DeleteByIdAsync(int id)
         {
-            _userService.DeleteById(id);
+            await _userService.DeleteByIdAsync(id);
         }
     }
 }

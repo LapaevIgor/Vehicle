@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Vehicle.BLL.Exceptions;
 using Vehicle.BLL.Models;
 using Vehicle.BLL.Services.Interfaces;
@@ -20,9 +21,9 @@ namespace Vehicle.BLL.Services
             _uow = uow;
         }
 
-        public User Add(User user)
+        public async Task<User> AddAsync(User user)
         {
-            var existingUser = _uow.UserRepository.GetById(user.Id);
+            var existingUser = await _uow.UserRepository.GetByIdAsync(user.Id);
             
             if(existingUser is not null)
             {
@@ -30,41 +31,41 @@ namespace Vehicle.BLL.Services
             }
 
             var userDb = _mapper.Map<UserDb>(user);
-            var result = _uow.UserRepository.Create(userDb);
+            var result = await _uow.UserRepository.CreateAsync(userDb);
             return _mapper.Map<User>(result);
         }
 
-        public void Delete(User user)
+        public async Task DeleteAsync(User user)
         {
             var userDb = _mapper.Map<UserDb>(user);
-            _uow.UserRepository.Delete(userDb);
+            await _uow.UserRepository.DeleteAsync(userDb);
         }
 
-        public void DeleteById(int id)
+        public async Task DeleteByIdAsync(int id)
         {
-            var existingUser = _uow.UserRepository.GetById(id);
+            var existingUser = await _uow.UserRepository.GetByIdAsync(id);
 
             if (existingUser is null)
             {
                 throw new UserException("User not found");
             }
 
-            _uow.UserRepository.DeleteById(id);
+            await _uow.UserRepository.DeleteByIdAsync(id);
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            var result = _uow.UserRepository.GetAll().ToList();
+            var result = await _uow.UserRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<User>>(result);
         }
 
-        public User GetById(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
-            var result = _uow.UserRepository.GetById(id);
+            var result = await _uow.UserRepository.GetByIdAsync(id);
             return _mapper.Map<User>(result);
         }
 
-        public User Update(User user)
+        public async Task<User> UpdateAsync(User user)
         {
             // Check for duplicate phone numbers
             if (user.UserPhoneNumbers != null && user.UserPhoneNumbers.Any(n => user.UserPhoneNumbers.Count(p => p.CheckPhoneNumberForDuplicate(n)) > 1))
@@ -72,7 +73,7 @@ namespace Vehicle.BLL.Services
                 throw new UserException("Duplicate phone numbers");
             }
 
-            var result = _uow.UserRepository.Update(_mapper.Map<UserDb>(user));
+            var result = await _uow.UserRepository.UpdateAsync(_mapper.Map<UserDb>(user));
             return _mapper.Map<User>(result);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Vehicle.DAL.Entities;
 using Vehicle.DAL.Repositories.Interfaces;
 
@@ -14,19 +15,19 @@ namespace Vehicle.DAL.Repositories.Implementations
             _context = context;
         }
 
-        public override UserDb Update(UserDb user)
+        public override async Task<UserDb> UpdateAsync(UserDb user)
         {
             var existingPhoneNumbersFromDb = _context.UserPhoneNumbers.Where(u => u.UserId == user.Id);
             _context.UserPhoneNumbers.RemoveRange(existingPhoneNumbersFromDb);
 
             var result = _context.Update(user).Entity;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return result;
         }
 
         public bool Exists(int id)
         {
-            var exisitngUser = base.GetById(id);
+            var exisitngUser = base.GetByIdAsync(id);
             if (exisitngUser is not null)
             {
                 return true;

@@ -1,21 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Vehicle.DAL.Repositories.Interfaces
 {
     public interface IBaseRepository<T>
     {
-        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAllAsync();
 
-        T GetById(int id);
+        Task<T> GetByIdAsync(int id);
 
-        T Create(T entity);
+        Task<T> CreateAsync(T entity);
 
-        T Update(T entity);
+        Task<T> UpdateAsync(T entity);
 
-        void DeleteById(int id);
+        Task DeleteByIdAsync(int id);
 
-        void Delete(T entity);
+        Task DeleteAsync(T entity);
 
-        void Save();
+        Task SaveAsync();
     }
 }

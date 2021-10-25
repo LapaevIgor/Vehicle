@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Vehicle.DAL.Repositories.Interfaces;
 
 namespace Vehicle.DAL.Repositories
@@ -12,43 +14,44 @@ namespace Vehicle.DAL.Repositories
             context = appDbContext;
         }
 
-        public virtual T Create(T entity)
+        public virtual async Task<T> CreateAsync(T entity)
         {
             var result = context.Add(entity).Entity;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return result;
         }
 
-        public void Delete(T entity)
+        public async Task DeleteAsync(T entity)
         {
             context.Remove<T>(entity);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public virtual void DeleteById(int id)
+        public virtual async Task DeleteByIdAsync(int id)
         {
-            Delete(context.Find<T>(id));
+            await DeleteAsync(context.Find<T>(id));
         }
 
-        public virtual T GetById(int id)
+        public virtual async Task<T> GetByIdAsync(int id)
         {
-            return context.Find<T>(id);
+            return await context.FindAsync<T>(id);
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            return context.Set<T>();
+            return await context.Set<T>().ToListAsync();
+            //return await context.Set<T>();
         }
 
-        public virtual void Save()
+        public virtual async Task SaveAsync()
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public virtual T Update(T entity)
+        public virtual async Task<T> UpdateAsync(T entity)
         {
             var result = context.Update(entity).Entity;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             return result; 
         }
     }
