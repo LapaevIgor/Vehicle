@@ -12,5 +12,8 @@
         public const string RegexPhoneNumber = "Invalid phone number format. The phone number should be in the following format: +375xxxxxxxxx";
         public const string StringLengthPhoneNumber = "Phone number cannot be longer than 13 characters.";
         public const string SexEnumDataType = "Invalid gender.";
+
+        public const string StringLengthCarBrandName = "Car brand name cannot be longer than 50 characters.";
+        public const string RequiredFieldCarBrandName = "Required";
     }
 }

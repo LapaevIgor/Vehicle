@@ -40,7 +40,6 @@ namespace Vehicle.DAL.Repositories
         public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
             return await context.Set<T>().ToListAsync();
-            //return await context.Set<T>();
         }
 
         public virtual async Task SaveAsync()

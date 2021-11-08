@@ -17,6 +17,7 @@ namespace Vehicle.DAL
         }
 
         public IUserRepository UserRepository => new Lazy<IUserRepository>(() => GetInstance<IUserRepository>()).Value;
+        public ICarBrandRepository CarBrandRepository => new Lazy<ICarBrandRepository>(() => GetInstance<ICarBrandRepository>()).Value;
 
         public void SaveChanges()
         {

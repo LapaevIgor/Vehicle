@@ -19,12 +19,14 @@ namespace Vehicle.Web.Extensions
         private static void RegisterBllDependencies(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICarBrandService, CarBrandService>();
         }
 
         private static void RegisterDalDependencies(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICarBrandRepository, CarBrandRepository>();
         }
     }
 }

@@ -20,7 +20,9 @@ namespace Vehicle.DAL.Entities
 
         public SexEnum Sex { get; set; }
 
-        public int FavoriteCarBrand { get; set; }
+        public int FavoriteCarBrandId { get; set; }
+
+        public virtual CarBrandDb FavoriteCarBrand { get; set; }
 
         public DateTime Birthday { get; set; }
 

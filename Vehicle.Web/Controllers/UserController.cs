@@ -50,11 +50,6 @@ namespace Vehicle.Web.Controllers
             return users == null ? NotFound() : Ok(users);
         }
 
-        /// <summary>
-        /// Add user
-        /// </summary>
-        /// <param name="userModel">User model</param>
-        /// <returns></returns>
         [HttpPost]
         [SwaggerOperation(Summary = "Add user", Description = "Add user")]
         [SwaggerResponse((int)HttpStatusCode.OK, "User profile added", typeof(UserModel))]
@@ -73,6 +68,7 @@ namespace Vehicle.Web.Controllers
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, ex.Message);
+                    return BadRequest(ex.Message);
                 }
             }
 
@@ -98,6 +94,7 @@ namespace Vehicle.Web.Controllers
                 catch(Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, ex.Message);
+                    return BadRequest(ex.Message);
                 }
             }
 
@@ -106,7 +103,7 @@ namespace Vehicle.Web.Controllers
 
         [HttpDelete, Route("{id})")]
         [SwaggerOperation(Summary = "Delete user by id", Description = "Delete user by id")]
-        [SwaggerResponse((int)HttpStatusCode.OK, "User deleted", typeof(UserModel))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "User deleted")]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid paramater format")]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Something wrong")]
         public async Task DeleteByIdAsync(int id)

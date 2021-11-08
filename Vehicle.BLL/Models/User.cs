@@ -20,7 +20,7 @@ namespace Vehicle.BLL.Models
 
         public SexEnum Sex { get; set; }
 
-        public int FavoriteCarBrand { get; set; }
+        public virtual CarBrand FavoriteCarBrand { get; set; }
 
         public DateTime Birthday { get; set; }
 

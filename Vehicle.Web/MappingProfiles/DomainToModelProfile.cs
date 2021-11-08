@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Vehicle.BLL.Models;
+using Vehicle.ViewModels.CarBrands;
 using Vehicle.ViewModels.Users;
 
 namespace Vehicle.Web.MappingProfiles
@@ -12,6 +13,8 @@ namespace Vehicle.Web.MappingProfiles
                 .ForMember(d => d.PhoneNumbers, o => o.MapFrom(s => s.UserPhoneNumbers));
 
             CreateMap<UserPhoneNumber, UserPhoneNumberModel>();
+
+            CreateMap<CarBrand, CarBrandModel>();
         }
     }
 }

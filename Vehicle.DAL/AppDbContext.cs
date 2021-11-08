@@ -13,12 +13,15 @@ namespace Vehicle.DAL
 
         public DbSet<UserDb> Users { get;set; }
         public DbSet<UserPhoneNumberDb> UserPhoneNumbers { get;set; }
+        public DbSet<CarBrandDb> CarBrands { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserDb>();
             modelBuilder.Entity<UserPhoneNumberDb>()
                 .HasOne(u => u.User);
+            modelBuilder.Entity<CarBrandDb>()
+                .HasMany(u => u.User);
         }
     }
 }

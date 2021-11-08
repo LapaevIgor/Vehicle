@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Vehicle.Constants;
 using Vehicle.Constants.Enums;
+using Vehicle.ViewModels.CarBrands;
 
 namespace Vehicle.ViewModels.Users
 {
@@ -28,5 +29,8 @@ namespace Vehicle.ViewModels.Users
         [EnumDataType(typeof(SexEnum), ErrorMessage = ValidationMessages.SexEnumDataType)]
         [Required]
         public SexEnum Sex { get; set; }
+
+        //[DataType(typeof(CarBrandModel))]
+        public CarBrandModel FavoriteCarBrand { get; set; }
     }
 }
